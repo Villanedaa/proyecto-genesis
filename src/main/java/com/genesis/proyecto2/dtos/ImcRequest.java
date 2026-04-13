@@ -1,5 +1,7 @@
 package com.genesis.proyecto2.dtos;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,12 +19,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImcRequest {
 
-    /**
-     * Peso del usuario
-     * */
+    /** Peso del usuario en kilogramos. */
+    @NotNull(message = "El peso es obligatorio")
+    @Positive(message = "El peso debe ser mayor a cero")
     private Double pesoKg;
-    /**
-     * Altura del usuario
-     * */
+
+    /** Altura del usuario en centímetros. */
+    @NotNull(message = "La altura es obligatoria")
+    @Positive(message = "La altura debe ser mayor a cero")
     private Double alturaCm;
 }

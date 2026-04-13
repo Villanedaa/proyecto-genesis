@@ -1,6 +1,8 @@
 package com.genesis.proyecto2.dtos;
 
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,18 +21,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreditoRequest {
 
-    /**
-     * Monto total a financiar.
-     */
+    /** Monto total a financiar. */
+    @NotNull(message = "El precio es obligatorio")
+    @Positive(message = "El precio debe ser mayor a cero")
     private Double precio;
-    /**
-     * Numero de cuotas para el pago del credito
-     */
+
+    /** Número de cuotas para el pago del crédito. */
+    @NotNull(message = "Las cuotas son obligatorias")
+    @Positive(message = "Las cuotas deben ser mayor a cero")
     private Integer cuotas;
 
-    /**
-     * Tasa de interes mensual expresada en porcentaje
-     */
-
+    /** Tasa de interés mensual expresada en porcentaje. */
+    @NotNull(message = "La tasa mensual es obligatoria")
+    @Positive(message = "La tasa mensual debe ser mayor a cero")
     private Double tasaMensual;
 }

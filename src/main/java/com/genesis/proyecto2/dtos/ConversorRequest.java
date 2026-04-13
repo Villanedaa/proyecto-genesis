@@ -1,5 +1,9 @@
 package com.genesis.proyecto2.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,13 +20,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConversorRequest {
-    /**
-     * Valor a convertir
-     */
+    /** Valor a convertir. Debe ser mayor a cero. */
+    @NotNull(message = "El monto es obligatorio")
+    @Positive(message = "El monto debe ser mayor a cero")
     private Double monto;
-    /**
-     * Moneda de origen de la transaccion (COP o USD).
-     */
 
+    /** Moneda de origen: COP o USD. */
+    @NotBlank(message = "La moneda de origen es obligatoria")
+    @Pattern(regexp = "COP|USD", message = "La moneda de origen debe ser COP o USD")
     private String monedaOrigen;
 }
