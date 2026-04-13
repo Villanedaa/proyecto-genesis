@@ -1,4 +1,4 @@
-package security;
+package com.genesis.proyecto2.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

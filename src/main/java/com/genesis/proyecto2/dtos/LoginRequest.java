@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest {
+    private String nombreUsuario;
+    private String contrasenia;
 }

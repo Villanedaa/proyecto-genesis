@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConversorReponse {
+public class ConversorResponse {
 
 
     /**

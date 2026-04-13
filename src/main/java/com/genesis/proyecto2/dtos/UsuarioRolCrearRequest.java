@@ -21,12 +21,12 @@ public class UsuarioRolCrearRequest {
     /**
      * Id unico del usuario
      */
-    @NotNull(message = "ID obligatorio")
+
     private Long usuarioId;
 
     /**
      * Id del rol( 1 ROLE_USER, 2 para ROLE_ADMIN).
      */
-    @NotNull(message = "ID obligatorio")
+
     private Long rolId;
 }
