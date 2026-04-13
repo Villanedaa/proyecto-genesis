@@ -25,10 +25,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        var usuario = usuarioRepository.findByNombreUsuarioWithRoles(nombreUsuario)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + nombreUsuario));
+        var usuario = usuarioRepository.findByNombreUsuarioWithRoles(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
         // Verificamos que la cuenta esté activa antes de permitir el login
         if (!"ACTIVO".equals(usuario.getEstado())) {
