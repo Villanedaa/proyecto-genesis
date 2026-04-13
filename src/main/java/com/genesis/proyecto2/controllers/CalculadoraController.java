@@ -1,10 +1,11 @@
 package com.genesis.proyecto2.controllers;
 
 import com.genesis.proyecto2.dtos.*;
-import com.genesis.proyecto2.services.ICalculadoraService;
+import com.genesis.proyecto2.services.IExecutionFacadeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CalculadoraController {
 
-    private final ICalculadoraService calculadoraService;
+    private final IExecutionFacadeService executionFacade;
 
     /**
      * OP-01 — ¿Cuánto me cuesta ese crédito?
@@ -29,8 +30,10 @@ public class CalculadoraController {
      */
     @PostMapping("/credit-calculator")
     public ResponseEntity<CreditoResponse> calcularCredito(
+            Authentication authentication,
             @Valid @RequestBody CreditoRequest request) {
-        return ResponseEntity.ok(calculadoraService.calcularCredito(request));
+        String email = authentication.getName();
+        return ResponseEntity.ok(executionFacade.executeCreditCalculator(email, request));
     }
 
     /**
@@ -40,8 +43,10 @@ public class CalculadoraController {
      */
     @PostMapping("/currency-converter")
     public ResponseEntity<ConversorResponse> convertirMoneda(
+            Authentication authentication,
             @Valid @RequestBody ConversorRequest request) {
-        return ResponseEntity.ok(calculadoraService.convertirMoneda(request));
+        String email = authentication.getName();
+        return ResponseEntity.ok(executionFacade.executeCurrencyConverter(email, request));
     }
 
     /**
@@ -51,8 +56,10 @@ public class CalculadoraController {
      */
     @PostMapping("/bmi-calculator")
     public ResponseEntity<ImcReponse> calcularImc(
+            Authentication authentication,
             @Valid @RequestBody ImcRequest request) {
-        return ResponseEntity.ok(calculadoraService.calcularImc(request));
+        String email = authentication.getName();
+        return ResponseEntity.ok(executionFacade.executeBmiCalculator(email, request));
     }
 
     /**
@@ -62,7 +69,9 @@ public class CalculadoraController {
      */
     @PostMapping("/sleep-calculator")
     public ResponseEntity<CalculadoraSuenioResponse> calcularSuenio(
+            Authentication authentication,
             @Valid @RequestBody CalculadoraSuenioRequest request) {
-        return ResponseEntity.ok(calculadoraService.calcularSuenio(request));
+        String email = authentication.getName();
+        return ResponseEntity.ok(executionFacade.executeSleepCalculator(email, request));
     }
 }
