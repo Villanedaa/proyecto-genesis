@@ -29,4 +29,20 @@ public interface IUsuarioService {
     Optional<UsuarioResponse> update(Long id, RegistroUsuario usuarioDto);
 
     boolean delete(Long id);
+
+    // Endpoints para usuario logueado
+    com.genesis.proyecto2.dtos.UserProfileResponse getProfile(String email);
+    
+    com.genesis.proyecto2.dtos.PaginatedTransactions getTransactions(String email, int page, int size);
+    
+    void subscribeToPlan(String email, com.genesis.proyecto2.dtos.SubscribeRequest request);
+
+    // Endpoints para Admin
+    com.genesis.proyecto2.dtos.PaginatedUsers getAdminUsers(int page, int size);
+    
+    void updateUserStatus(Long userId, String status);
+    
+    void rechargeTokens(Long userId, Integer amount);
+    
+    com.genesis.proyecto2.dtos.MetricsResponse getMetrics();
 }
