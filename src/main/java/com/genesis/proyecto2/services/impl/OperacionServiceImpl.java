@@ -1,9 +1,11 @@
 package com.genesis.proyecto2.services.impl;
 
 import com.genesis.proyecto2.dtos.OperacionResponse;
+import com.genesis.proyecto2.exception.ResourceNotFoundException;
 import com.genesis.proyecto2.repositories.IOperacionRepository;
 import com.genesis.proyecto2.services.IOperacionService;
-import org.springframework.transaction.annotation.Transactional;import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class OperacionServiceImpl implements IOperacionService {
                         .nombre(op.getNombre())
                         .costoToken(java.math.BigDecimal.valueOf(op.getCostoBase()))
                         .build())
-                .orElseThrow(() -> new RuntimeException("Operación no encontrada con ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Operacion", id));
     }
 
     @Override

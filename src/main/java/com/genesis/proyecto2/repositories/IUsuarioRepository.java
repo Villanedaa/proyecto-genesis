@@ -16,6 +16,8 @@ import java.util.Optional;
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 
+    Optional<Usuario> findByCorreo(String correo);
+
     // Consulta optimizada para cargar roles y evitar el error LazyInitializationException
     @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.usuarioRoles ur LEFT JOIN FETCH ur.rol WHERE u.nombreUsuario = :nombreUsuario")
     Optional<Usuario> findByNombreUsuarioWithRoles(@Param("nombreUsuario") String nombreUsuario);
