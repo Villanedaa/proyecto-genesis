@@ -1,9 +1,10 @@
 package com.genesis.proyecto2.dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 /**
  * @author Sergio<sergio.grajalesc@autonoma.edu.co>
@@ -20,20 +21,21 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class RegistroUsuario {
 
     /**
-     *  Nombre unico elegido por el usuario
+     * Nombre único elegido por el usuario
      */
-    @NotNull
+    @NotBlank(message = "El nombre de usuario es obligatorio")
     private String nombreUsuario;
 
     /**
-     * correo que se asocia a la cuenta del usuario
+     * Correo que se asocia a la cuenta del usuario
      */
-    @NotNull
+    @NotBlank(message = "El correo es obligatorio")
+    @Email(message = "El correo debe tener un formato válido")
     private String correo;
 
     /**
-     * Contrasenia elegida por el usuario
+     * Contraseña elegida por el usuario
      */
-    @NotNull
+    @NotBlank(message = "La contraseña es obligatoria")
     private String contrasenia;
 }

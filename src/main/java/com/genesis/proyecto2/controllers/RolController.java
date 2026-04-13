@@ -2,6 +2,7 @@ package com.genesis.proyecto2.controllers;
 
 import com.genesis.proyecto2.dtos.RolResponse;
 import com.genesis.proyecto2.entities.Rol;
+import com.genesis.proyecto2.exception.ResourceNotFoundException;
 import com.genesis.proyecto2.services.IRolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +34,14 @@ public class RolController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RolResponse> findById(@PathVariable Long id) {
-        return rolService.findById(id)
-                .map(this::toResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Rol rol = rolService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rol", id));
+        return ResponseEntity.ok(toResponse(rol));
     }
 
     /**
      * Mapeo manual de Entidad a DTO.
-     * Asegúrate de que RolResponse tenga los métodos setId y setNombre.
+     * Asegurarse de que RolResponse tenga los métodos setId y setNombre.
      */
     private RolResponse toResponse(Rol rol) {
         RolResponse response = new RolResponse();

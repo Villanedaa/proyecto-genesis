@@ -33,9 +33,8 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponse> obtenerPerfil(@PathVariable Long id) {
-        return usuarioService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        // findById lanza ResourceNotFoundException si no existe → GlobalExceptionHandler devuelve 404 JSON
+        return ResponseEntity.ok(usuarioService.findById(id).orElseThrow());
     }
 
     @GetMapping

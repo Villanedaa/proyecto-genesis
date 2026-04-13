@@ -4,10 +4,12 @@ import com.genesis.proyecto2.dtos.RegistroUsuario;
 import com.genesis.proyecto2.dtos.UsuarioResponse;
 import com.genesis.proyecto2.dtos.UsuarioRolCrearRequest;
 import com.genesis.proyecto2.entities.Usuario;
+import com.genesis.proyecto2.exception.DuplicateResourceException;
+import com.genesis.proyecto2.exception.ResourceNotFoundException;
 import com.genesis.proyecto2.repositories.IUsuarioRepository;
 import com.genesis.proyecto2.services.IUsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder; // IMPORTANTE
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional(readOnly = true)
     public Optional<UsuarioResponse> findById(Long id) {
-        return usuarioRepository.findById(id).map(this::toResponse);
+        return Optional.of(
+                usuarioRepository.findById(id)
+                        .map(this::toResponse)
+                        .orElseThrow(() -> new ResourceNotFoundException("Usuario", id))
+        );
     }
 
     @Override
@@ -42,11 +48,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioResponse save(RegistroUsuario dto) {
+        // Verificamos unicidad antes de persistir
+        if (usuarioRepository.findByNombreUsuario(dto.getNombreUsuario()).isPresent()) {
+            throw new DuplicateResourceException("nombreUsuario", dto.getNombreUsuario());
+        }
+        if (usuarioRepository.findByCorreo(dto.getCorreo()).isPresent()) {
+            throw new DuplicateResourceException("correo", dto.getCorreo());
+        }
+
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario(dto.getNombreUsuario());
         usuario.setCorreo(dto.getCorreo());
 
-        // CORRECCIÓN SEGURIDAD: Encriptar antes de guardar
+        // Encriptar antes de guardar
         usuario.setContrasenia(passwordEncoder.encode(dto.getContrasenia()));
 
         usuario.setSaldoTokens(100);
@@ -59,8 +73,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioResponse asignarRol(UsuarioRolCrearRequest request) {
-        // Aquí faltaría la lógica de asignar en IUsuarioRolRepository si lo requieres
-        return findById(request.getUsuarioId()).orElse(null);
+        // Lanzamos ResourceNotFoundException si el usuario no existe
+        return findById(request.getUsuarioId())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", request.getUsuarioId()));
     }
 
     @Override
