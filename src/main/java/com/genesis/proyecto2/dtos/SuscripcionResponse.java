@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Sergio <sergio.grajalesc@autonoma.edu.co>
  * @author Jhojan <jhojana.villadav@autonoma.edu.co>
@@ -17,4 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SuscripcionResponse {
+
+    private Long id;
+    private Long usuarioId;
+    private String nombrePlan; // Ejemplo: "PREMIUM", "BASIC"
+    private Double costo;
+    private String estado; // Ejemplo: "ACTIVA"
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
 }

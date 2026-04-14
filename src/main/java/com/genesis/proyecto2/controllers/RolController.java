@@ -1,6 +1,6 @@
 package com.genesis.proyecto2.controllers;
 
-import com.genesis.proyecto2.dtos.RolReponse;
+import com.genesis.proyecto2.dtos.RolResponse;
 import com.genesis.proyecto2.entities.Rol;
 import com.genesis.proyecto2.services.IRolService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,6 @@ import java.util.List;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * Controlador para la exposición de los servicios del catálogo de roles.
  */
 @RestController
 @RequestMapping("/api/roles")
@@ -25,14 +24,15 @@ public class RolController {
     private final IRolService rolService;
 
     @GetMapping
-    public ResponseEntity<List<RolReponse>> findAll() {
-        List<RolReponse> response = rolService.findAll().stream()
-                .map(this::toResponse).toList();
+    public ResponseEntity<List<RolResponse>> findAll() {
+        List<RolResponse> response = rolService.findAll().stream()
+                .map(this::toResponse)
+                .toList();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RolReponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RolResponse> findById(@PathVariable Long id) {
         return rolService.findById(id)
                 .map(this::toResponse)
                 .map(ResponseEntity::ok)
@@ -40,10 +40,11 @@ public class RolController {
     }
 
     /**
-     * Mapeo manual para mantener el desacoplamiento de la entidad.
+     * Mapeo manual de Entidad a DTO.
+     * Asegúrate de que RolResponse tenga los métodos setId y setNombre.
      */
-    private RolReponse toResponse(Rol rol) {
-        RolReponse response = new RolReponse();
+    private RolResponse toResponse(Rol rol) {
+        RolResponse response = new RolResponse();
         response.setId(rol.getId());
         response.setNombre(rol.getNombre());
         return response;
