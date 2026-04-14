@@ -9,13 +9,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controlador para la ejecución de las operaciones del catálogo
- * Rutas
- *   POST /execute/credit-calculator     OP-01 50 tokens
- *   POST /execute/currency-converter    OP-02 20 tokens
- *   POST /execute/bmi-calculator        OP-03 15 tokens
- *   POST /execute/sleep-calculator      OP-04 20 tokens
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ *        Controlador para la ejecución de las operaciones del catálogo
+ *        Rutas
+ *        POST /execute/credit-calculator OP-01 50 tokens
+ *        POST /execute/currency-converter OP-02 20 tokens
+ *        POST /execute/bmi-calculator OP-03 15 tokens
+ *        POST /execute/sleep-calculator OP-04 20 tokens
  */
+
 @RestController
 @RequestMapping("/execute")
 @RequiredArgsConstructor

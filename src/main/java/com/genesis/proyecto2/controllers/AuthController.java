@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
  * Endpoint público de autenticación y registro.
  */
 @RestController
@@ -32,6 +37,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegistroUsuario request) {
+
         // En un caso real se podria retornar el AuthResponse con un token directo
         // pero openapi.yaml dice que responde con 201 y cuerpo vacío
         usuarioService.save(request);

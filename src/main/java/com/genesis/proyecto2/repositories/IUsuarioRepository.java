@@ -18,11 +18,13 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByCorreo(String correo);
 
-    // Consulta cambiada para cargar roles y evitar error LazyInitializationException por nombreUsuario
+    // Consulta cambiada para cargar roles y evitar error
+    // LazyInitializationException por nombreUsuario
     @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.usuarioRoles ur LEFT JOIN FETCH ur.rol WHERE u.nombreUsuario = :nombreUsuario")
     Optional<Usuario> findByNombreUsuarioWithRoles(@Param("nombreUsuario") String nombreUsuario);
 
-    // Consulta cambiada para cargar roles y evitar error LazyInitializationException por correo
+    // Consulta cambiada para cargar roles y evitar error
+    // LazyInitializationException por correo
     @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.usuarioRoles ur LEFT JOIN FETCH ur.rol WHERE u.correo = :correo")
     Optional<Usuario> findByCorreoWithRoles(@Param("correo") String correo);
 }

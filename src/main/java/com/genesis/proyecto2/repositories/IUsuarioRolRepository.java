@@ -14,7 +14,7 @@ import java.util.List;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 13/04/2026
- * */
+ */
 @Repository
 public interface IUsuarioRolRepository extends JpaRepository<UsuarioRol, UsuarioRolId> {
 

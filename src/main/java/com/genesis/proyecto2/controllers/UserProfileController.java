@@ -11,7 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Endpoint para las acciones propias del usuario autenticado
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ *        Endpoint para las acciones propias del usuario autenticado (Users).
  */
 @RestController
 @RequestMapping("/users/me")
