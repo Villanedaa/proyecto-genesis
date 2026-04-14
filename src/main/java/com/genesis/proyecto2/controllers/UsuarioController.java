@@ -22,7 +22,7 @@ public class UsuarioController {
     private final IUsuarioService usuarioService;
 
     /**
-     * Endpoint para el registro de nuevos usuarios (Punto de entrada del sistema).
+     * Endpoint para el registro de nuevos usuarios
      */
     @PostMapping("/registro")
     public ResponseEntity<UsuarioResponse> registrar(@Valid @RequestBody RegistroUsuario request) {
@@ -33,7 +33,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponse> obtenerPerfil(@PathVariable Long id) {
-        // findById lanza ResourceNotFoundException si no existe → GlobalExceptionHandler devuelve 404 JSON
+        // findById lanza ResourceNotFoundException si no existe i GlobalExceptionHandler devuelve 404 JSON
         return ResponseEntity.ok(usuarioService.findById(id).orElseThrow());
     }
 

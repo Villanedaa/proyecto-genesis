@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"usuario", "plan"}) // Evitamos recursividad
+@ToString(exclude = {"usuario", "plan"}) // Evite recursividad
 public class Suscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

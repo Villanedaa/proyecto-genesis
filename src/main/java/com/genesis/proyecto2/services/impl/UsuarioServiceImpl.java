@@ -64,7 +64,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioResponse save(RegistroUsuario dto) {
-        // Verificamos unicidad antes de persistir
+        // unicidad antes de persistir
         if (usuarioRepository.findByNombreUsuario(dto.getNombreUsuario()).isPresent()) {
             throw new DuplicateResourceException("nombreUsuario", dto.getNombreUsuario());
         }
@@ -89,7 +89,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioResponse asignarRol(UsuarioRolCrearRequest request) {
-        // Lanzamos ResourceNotFoundException si el usuario no existe
+        // Lanz ResourceNotFoundException si el usuario no existe
         return findById(request.getUsuarioId())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", request.getUsuarioId()));
     }
@@ -201,7 +201,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         nuevaSuscripcion.setEstado("ACTIVO");
         suscripcionRepository.save(nuevaSuscripcion);
 
-        // Acreditar tokens al usuario (sobreescribimos o sumamos? Genesis dice: "el equipo debe decidir... qué sucede con el saldo anterior". Sumemos el saldo anterior con el nuevo del plan).
+        // Acreditar tokens al usuario 
         usuario.setSaldoTokens(usuario.getSaldoTokens() + nuevoPlan.getTokensOtorgados());
         usuarioRepository.save(usuario);
     }

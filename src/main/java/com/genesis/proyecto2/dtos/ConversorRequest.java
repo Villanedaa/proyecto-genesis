@@ -25,7 +25,7 @@ public class ConversorRequest {
     @Positive(message = "El monto debe ser mayor a cero")
     private Double monto;
 
-    /** Moneda de origen: COP o USD. */
+    /** Moneda de origen COP o USD */
     @NotBlank(message = "La moneda de origen es obligatoria")
     @Pattern(regexp = "COP|USD", message = "La moneda de origen debe ser COP o USD")
     private String monedaOrigen;

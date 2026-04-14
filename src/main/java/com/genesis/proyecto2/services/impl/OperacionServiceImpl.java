@@ -20,14 +20,14 @@ public class OperacionServiceImpl implements IOperacionService {
     @Override
     @Transactional(readOnly = true)
     public List<OperacionResponse> findAllActive() {
-        // Filtramos por el campo 'estado' que tienes en tu Entity
+        // Filtramos por el campo estado
         return operacionRepository.findAll().stream()
                 .filter(op -> "ACTIVO".equals(op.getEstado()))
                 .map(op -> OperacionResponse.builder()
                         .id(op.getId())
-                        .nombre(op.getNombre()) // Usamos 'nombre' de tu Entity
-                        .descripcion("Código: " + op.getCodigo()) // Usamos 'codigo'
-                        .costoToken(java.math.BigDecimal.valueOf(op.getCostoBase())) // Usamos 'costoBase'
+                        .nombre(op.getNombre()) // Usamos nombre de entity
+                        .descripcion("Código: " + op.getCodigo()) // Usamos codigo
+                        .costoToken(java.math.BigDecimal.valueOf(op.getCostoBase())) // Usamos costoBase
                         .build())
                 .collect(Collectors.toList());
     }

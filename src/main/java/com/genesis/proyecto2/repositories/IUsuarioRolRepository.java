@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface IUsuarioRolRepository extends JpaRepository<UsuarioRol, UsuarioRolId> {
 
-    // Usamos JPQL para evitar conflictos con los guiones bajos del nombre del método
+    // se usa JPQL para conflictos con los guiones bajos del nombre del método
     @Query("SELECT ur FROM UsuarioRol ur WHERE ur.id.usuario_id = :usuarioId")
     List<UsuarioRol> buscarPorUsuarioId(@Param("usuarioId") Long usuarioId);
 

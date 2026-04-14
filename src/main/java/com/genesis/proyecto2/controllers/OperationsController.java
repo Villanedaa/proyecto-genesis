@@ -27,7 +27,7 @@ public class OperationsController {
             OperacionResponse res = new OperacionResponse();
             res.setId(o.getId());
             res.setNombre(o.getNombre());
-            res.setDescripcion(o.getCodigo()); // Hack: put code in description since DTO doesn't have it
+            res.setDescripcion(o.getCodigo()); //put code in description since DTO doesn't have it
             res.setCostoToken(BigDecimal.valueOf(o.getCostoBase()));
             return res;
         }).collect(Collectors.toList());

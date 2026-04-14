@@ -13,8 +13,8 @@ import java.util.List;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * DTO que devuelve las opciones de horarios calculados para sueño (OP-04).
- * Corresponde al schema SleepCalculatorResponse de openapi.yaml.
+ * DTO que devuelve las opciones de horarios calculados para sueño (OP-04)
+ * Corresponde al schema SleepCalculatorResponse
  */
 @Data
 @Builder
@@ -23,8 +23,8 @@ import java.util.List;
 public class CalculadoraSuenioResponse {
 
     /**
-     * Lista de 3 opciones de horario:
-     * Mínimo (4 ciclos / 6h), Recomendado (5 ciclos / 7.5h), Ideal (6 ciclos / 9h).
+     * Lista de 3 opciones de horario
+     * Mínimo (4 ciclos o 6h) Recomendado (5 ciclos o 7.5h) Ideal (6 ciclos o 9h)
      */
     private List<OpcionSuenio> opciones;
 }

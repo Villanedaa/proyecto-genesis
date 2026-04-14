@@ -36,8 +36,7 @@ public class JwtUtil {
 
         Map<String, Object> claimsExtra = new HashMap<>();
         claimsExtra.put("roles", roles);
-        // Sugerencia: Si tu UserDetails implementa una interfaz propia,
-        // podrías incluir el ID del usuario aquí para el motor de tokens.
+        // !!! se podria incluir el id de usuario para montos de tokens...
 
         return Jwts.builder()
                 .claims(claimsExtra)

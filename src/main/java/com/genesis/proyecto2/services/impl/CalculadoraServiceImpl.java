@@ -77,12 +77,12 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
         );
     }
 
-    // ── OP-02: Conversor COP ↔ USD ────────────────────────────────────────────
+    // ── OP-02 Conversor COP  USD ────────────────────────────────────────────
 
     /**
-     * Fórmula según el proyecto Genesis:
-     * Si moneda_origen = COP → resultado = monto / tasa_cop_por_usd
-     * Si moneda_origen = USD → resultado = monto × tasa_cop_por_usd
+     * Fórmula
+     * Si moneda_origen = COP resultado = monto / tasa_cop_por_usd
+     * Si moneda_origen = USD resultado = monto × tasa_cop_por_usd
      */
     @Override
     @Transactional(readOnly = true)
@@ -114,7 +114,7 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
         return response;
     }
 
-    // ── OP-03: Calculadora de IMC ─────────────────────────────────────────────
+    // ── OP-03 Calculadora de IMC ─────────────────────────────────────────────
 
     /**
      * Fórmulas según el proyecto Genesis:
@@ -137,7 +137,7 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
         else if (imc < 30.0)  categoria = "Sobrepeso";
         else                  categoria = "Obesidad";
 
-        // Diferencia con el rango saludable:
+        // Diferencia con el rango saludable
         // negativo = por debajo del mínimo, positivo = por encima del máximo, 0 = en rango
         double diferencia;
         if      (request.getPesoKg() < pesoMin) diferencia = redondear(request.getPesoKg() - pesoMin);
@@ -153,16 +153,16 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
                 .build();
     }
 
-    // ── OP-04: Calculadora de Sueño ───────────────────────────────────────────
+    // ── OP-04 Calculadora de Sueño ───────────────────────────────────────────
 
     /**
      * Un ciclo = 90 minutos. Se calculan 3 opciones: 4, 5 y 6 ciclos.
      *
-     * Modo HORA_DESPERTAR:
+     * Modo HORA_DESPERTAR
      *   hora_acostarse = hora_despertar - (ciclos × 90 min) - minutos_para_dormir
      *
-     * Modo HORA_ACOSTARSE:
-     *   hora_despertar = hora_acostarse + minutos_para_dormir + (ciclos × 90 min)
+     * Modo HORA_ACOSTARSE
+     *   hora_despertar  hora_acostarse + minutos_para_dormir + (ciclos × 90 min)
      */
     @Override
     @Transactional(readOnly = true)
@@ -181,12 +181,12 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
 
             LocalTime horaCalculada;
             if (esDespertar) {
-                // Retrocedemos: hora de acostarse = despertar - ciclos - minutos para dormir
+                // Retroced hora de acostarse = despertar - ciclos - minutos para dormir
                 horaCalculada = horaRef
                         .minusMinutes(totalMinutos)
                         .minusMinutes(minutosDormir);
             } else {
-                // Avanzamos: hora de despertar = acostarse + minutos para dormir + ciclos
+                // Av hora de despertar = acostarse + minutos para dormir + ciclos
                 horaCalculada = horaRef
                         .plusMinutes(minutosDormir)
                         .plusMinutes(totalMinutos);
@@ -206,7 +206,7 @@ public class CalculadoraServiceImpl implements ICalculadoraService {
 
     // ── Utilidad ──────────────────────────────────────────────────────────────
 
-    /** Redondea a 2 decimales para evitar ruido de punto flotante en las respuestas. */
+    /** Redondeados a 2 decimales para evitar ruido de punto flotante en las respuestas */
     private double redondear(double valor) {
         return Math.round(valor * 100.0) / 100.0;
     }

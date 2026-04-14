@@ -19,12 +19,12 @@ public class RecargaTokens {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    // Aqui tenemos presente que yo nombre "usuarioReceptor" con el fin de entender que esta clase procesa y toma los datos de quien recibe y quien envia tokens
-    // Relación 1: El usuario que recibe el saldo
+    // !!!Aqui tener presente que el nombre que yo le puse usuarioReceptor es con el fin de entender que esta clase procesa y toma los datos de quien recibe y quien envia tokens
+    // Relación 1 El usuario que recibe el saldo
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuarioReceptor;
-    // Relación 2: El administrador que autoriza (también es un Usuario)
+    // Relación 2 El administrador que autoriza también es Usuario
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id", nullable = false)
     private Usuario administrador;

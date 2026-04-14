@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Endpoint para las acciones propias del usuario autenticado (Users).
+ * Endpoint para las acciones propias del usuario autenticado
  */
 @RestController
 @RequestMapping("/users/me")
@@ -22,7 +22,7 @@ public class UserProfileController {
 
     @GetMapping
     public ResponseEntity<UserProfileResponse> getCurrentProfile(Authentication authentication) {
-        String email = authentication.getName(); // Spring Security UserDetails username is email
+        String email = authentication.getName();
         return ResponseEntity.ok(usuarioService.getProfile(email));
     }
 

@@ -19,12 +19,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImcRequest {
 
-    /** Peso del usuario en kilogramos. */
+    /** Peso del usuario en kilogramos */
     @NotNull(message = "El peso es obligatorio")
     @Positive(message = "El peso debe ser mayor a cero")
     private Double pesoKg;
 
-    /** Altura del usuario en centímetros. */
+    /** Altura del usuario en centímetros */
     @NotNull(message = "La altura es obligatoria")
     @Positive(message = "La altura debe ser mayor a cero")
     private Double alturaCm;

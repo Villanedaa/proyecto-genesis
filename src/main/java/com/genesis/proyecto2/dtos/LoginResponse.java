@@ -22,7 +22,7 @@ public class LoginResponse {
      * */
     private String token;
     /**
-     * Esquema de autenticaciOn utilizado. Por defecto es "Bearer",
+     * Esquema de autenticaciOn utilizado. Por defecto es Bearer,
      * */
     private String tipoToken = "Bearer";
 }
