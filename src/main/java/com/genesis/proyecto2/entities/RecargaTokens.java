@@ -7,7 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-
+/**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ * */
 @Entity
 @Table(name = "recarga_tokens")
 @Data
@@ -19,12 +25,17 @@ public class RecargaTokens {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    // Aqui tenemos presente que yo nombre "usuarioReceptor" con el fin de entender que esta clase procesa y toma los datos de quien recibe y quien envia tokens
+    /**
+     * Aqui tenemos presente que yo nombre "usuarioReceptor"
+     * con el fin de entender que esta clase procesa y toma los datos de quien recibe y quien envia tokens
     // Relación 1: El usuario que recibe el saldo
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuarioReceptor;
-    // Relación 2: El administrador que autoriza (también es un Usuario)
+    /** Relación 2: El administrador que autoriza (también es un Usuario)
+     *
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id", nullable = false)
     private Usuario administrador;
