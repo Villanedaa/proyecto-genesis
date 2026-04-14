@@ -39,7 +39,6 @@ public class AuthController {
     public ResponseEntity<Void> register(@Valid @RequestBody RegistroUsuario request) {
 
         // En un caso real se podria retornar el AuthResponse con un token directo
-        // pero openapi.yaml dice que responde con 201 y cuerpo vacío
         usuarioService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
