@@ -17,6 +17,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioRolId implements Serializable {
-    private Long usuario_id; // Debe coincidir con el nombre en tu SQL
+    private Long usuario_id; // Debe coincidir con el nombre en la sql
     private Long rol_id;
 }

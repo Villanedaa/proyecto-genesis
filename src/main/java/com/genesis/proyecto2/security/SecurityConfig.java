@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Permitimos el registro y login sin autenticación (según openapi.yaml)
+                        // Permitimos el registro y login sin autenticación
                         .requestMatchers("/auth/register", "/auth/login").permitAll()
                         .requestMatchers("/error").permitAll()
                         // Cualquier otra ruta requiere autenticación con JWT

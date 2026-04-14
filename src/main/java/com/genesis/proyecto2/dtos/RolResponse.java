@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * DTO para devolver la información de los roles sin exponer la entidad completa.
+ * DTO para devolver la información de los roles sin exponer la entidad completa
  */
 @Data
 @AllArgsConstructor

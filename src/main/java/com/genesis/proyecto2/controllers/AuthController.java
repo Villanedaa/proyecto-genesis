@@ -38,15 +38,15 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegistroUsuario request) {
 
+        // En un caso real se podria retornar el AuthResponse con un token directo
         usuarioService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
-        /**
-         * Autenticar: Spring Security validará contra UserDetailsService
-        */
+        //Spring Security validará contra UserDetailsService
+        
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getNombreUsuario(), request.getContrasenia())
         );

@@ -42,7 +42,7 @@ public class UsuarioResponse {
     private Integer saldoTokens;
 
     /**
-     * Estado del usuario (ACTIVO, INACTIVO).
+     * Estado del usuario ACTIVO, INACTIVO
      */
     private String estado;
     /**

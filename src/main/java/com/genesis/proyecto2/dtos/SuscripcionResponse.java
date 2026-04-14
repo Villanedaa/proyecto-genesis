@@ -22,9 +22,9 @@ public class SuscripcionResponse {
 
     private Long id;
     private Long usuarioId;
-    private String nombrePlan; // Ejemplo: "PREMIUM", "BASIC"
+    private String nombrePlan; // PREMIUM, BASIC
     private Double costo;
-    private String estado; // Ejemplo: "ACTIVA"
+    private String estado; // ACTIVA
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
 }

@@ -26,17 +26,17 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_usuario") // Columna SQL: nombre_usuario
-    private String nombreUsuario;    // Lombok genera: setNombreUsuario()
+    @Column(name = "nombre_usuario") // Columna SQL nombre_usuario
+    private String nombreUsuario;    // Lombok genera setNombreUsuario()
 
     @Column(name = "correo")
     private String correo;
 
-    @Column(name = "contrasenia")    // Columna SQL: contrasenia
-    private String contrasenia;      // Lombok genera: setContrasenia()
+    @Column(name = "contrasenia")    // Columna SQL contrasenia
+    private String contrasenia;      // Lombok genera setContrasenia()
 
-    @Column(name = "saldo_tokens")   // Columna SQL: saldo_tokens
-    private Integer saldoTokens;     // Lombok genera: setSaldoTokens()
+    @Column(name = "saldo_tokens")   // Columna SQL saldo_tokens
+    private Integer saldoTokens;     // Lombok genera setSaldoTokens()
 
     @Column(name = "estado")
     private String estado;

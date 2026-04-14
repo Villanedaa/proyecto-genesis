@@ -74,7 +74,7 @@ public class ExecutionFacadeServiceImpl implements IExecutionFacadeService {
 
         int costoBase = operacion.getCostoBase();
         
-        // Primera validación: si no tiene para el mínimo, rechazar inmediatamente
+        // validación si no tiene para el mínimo, rechazar inmediatamente
         if (usuario.getSaldoTokens() < (costoBase + tokensEntrada)) {
             throw new InsufficientTokensException(costoBase + tokensEntrada, usuario.getSaldoTokens());
         }
@@ -92,7 +92,7 @@ public class ExecutionFacadeServiceImpl implements IExecutionFacadeService {
 
         int costoTotal = costoBase + tokensEntrada + tokensSalida;
 
-        // Segunda validación: conociendo costo total final, debita.
+        // validación conociendo costo total final debita
         if (usuario.getSaldoTokens() < costoTotal) {
             throw new InsufficientTokensException(costoTotal, usuario.getSaldoTokens());
         }

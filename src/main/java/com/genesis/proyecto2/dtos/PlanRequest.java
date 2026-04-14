@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlanRequest {
     /**
-     * Nombre del plan (Free, Pro, Enterprise)
+     * Nombre del plan Free, Pro, Enterprise
      */
 
     private String nombre;

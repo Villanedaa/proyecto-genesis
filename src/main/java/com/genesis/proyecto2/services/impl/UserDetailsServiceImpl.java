@@ -30,16 +30,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         var usuario = usuarioRepository.findByNombreUsuarioWithRoles(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        // Verificamos que la cuenta esté activa antes de permitir el login
+        // Verifica que la cuenta esté activa antes de permitir el login
         if (!"ACTIVO".equals(usuario.getEstado())) {
             throw new UserInactiveException(usuario.getNombreUsuario());
         }
 
-        // Construimos el objeto User de Spring Security
+        // Construyw el objeto User de Spring Security
         return User.builder()
                 .username(usuario.getNombreUsuario())
                 .password(usuario.getContrasenia())
-                .disabled(false) // Ya verificamos arriba que está ACTIVO
+                .disabled(false) // Ya verifica arriba que está ACTIVO
                 .authorities(usuario.getUsuarioRoles().stream()
                         .map(ur -> ur.getRol().getNombre())
                         .toArray(String[]::new))

@@ -2,8 +2,8 @@ package com.genesis.proyecto2.exception;
 
 /**
  * Se lanza cuando un administrador intenta eliminar un Plan que aún tiene
- * suscripciones activas. Según lo especificado en openapi.yaml:
- * <pre>DELETE /plans/{planId} → 400 "Cannot delete plan with active subscriptions"</pre>
+ * suscripciones activas.
+ * <pre>DELETE /plans/{planId}  400 "Cannot delete plan with active subscriptions"</pre>
  * <p>Mapea al código HTTP 400 Bad Request.</p>
  *
  * <p>Ejemplo de uso:</p>

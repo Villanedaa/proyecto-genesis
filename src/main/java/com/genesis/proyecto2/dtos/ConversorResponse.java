@@ -26,7 +26,7 @@ public class ConversorResponse {
     private Double montoConvertido;
 
     /**
-     * Direccion de cambio sea cop-> usd o usd-> cop
+     * Direccion de cambio sea cop o usd o usd cop
      * */
     private String direccion;
 

@@ -19,8 +19,8 @@ import java.util.Optional;
 public interface IOperacionRepository extends JpaRepository<Operacion, Long> {
 
     /**
-     * Busca una operación por su nombre o tipo (ej. 'SUMA', 'CALCULO_IMC').
-     * Útil para validar lógica de negocio antes de ejecutar transacciones.
+     * Busca una operación por su nombre o tipo eje 'SUMA', 'CALCULO_IMC'
+     * Útil para validar lógica de negocio antes de ejecutar transacciones
      */
     Optional<Operacion> findByCodigo(String codigo);
 }

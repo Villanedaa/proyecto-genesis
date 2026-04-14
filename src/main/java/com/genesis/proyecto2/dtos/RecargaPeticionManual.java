@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * DTO utilizado por el administrador para realizar recargas manuales de tokens a un usuario. [cite: 18, 33]
+ * DTO utilizado por el administrador para realizar recargas manuales de tokens a un usuario
  */
 
 @Data
