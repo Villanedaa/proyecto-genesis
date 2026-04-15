@@ -84,7 +84,7 @@ public class PlanController {
         Plan plan = planRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Plan", id));
         
-        // Un plan no puede eliminarse si tiene suscripciones activas (genesis.txt)
+        // Un plan no puede eliminarse si tiene suscripciones activas
         if (suscripcionRepository.existsActiveByPlanId(id)) {
             throw new PlanHasActiveSubscriptionsException("El plan no puede eliminarse porque tiene suscripciones activas.");
         }

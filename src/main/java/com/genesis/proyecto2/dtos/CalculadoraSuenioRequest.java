@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
  * @version 1.0
  * @since 12/04/2026
  * DTO para solicitar el cálculo de ciclos de sueño (OP-04).
- * Campos según el esquema SleepCalculatorRequest de openapi.yaml.
+ * Campos según el esquema SleepCalculatorRequest
  */
 @Data
 @AllArgsConstructor
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class CalculadoraSuenioRequest {
 
     /**
-     * Modo de cálculo: HORA_DESPERTAR o HORA_ACOSTARSE.
+     * Modo de cálculo HORA_DESPERTAR o HORA_ACOSTARSE
      */
     @NotBlank(message = "El modo es obligatorio")
     @Pattern(regexp = "HORA_DESPERTAR|HORA_ACOSTARSE",
@@ -29,7 +29,7 @@ public class CalculadoraSuenioRequest {
     private String modo;
 
     /**
-     * Hora de referencia en formato HH:mm.
+     * Hora de referencia en formato HH:mm
      */
     @NotBlank(message = "La hora de referencia es obligatoria")
     @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$",
@@ -37,8 +37,8 @@ public class CalculadoraSuenioRequest {
     private String hora;
 
     /**
-     * Minutos promedio que tarda el usuario en quedarse dormido.
-     * Por defecto: 14 minutos según el enunciado del proyecto.
+     * Minutos promedio que tarda el usuario en quedarse dormido
+     * Por defecto 14 minutos
      */
     private Integer minutosDormir = 14;
 }

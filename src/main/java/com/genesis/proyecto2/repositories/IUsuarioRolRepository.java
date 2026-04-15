@@ -14,11 +14,11 @@ import java.util.List;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 13/04/2026
- * */
+ */
 @Repository
 public interface IUsuarioRolRepository extends JpaRepository<UsuarioRol, UsuarioRolId> {
 
-
+    // se usa JPQL para conflictos con los guiones bajos del nombre del método
     @Query("SELECT ur FROM UsuarioRol ur WHERE ur.id.usuario_id = :usuarioId")
     List<UsuarioRol> buscarPorUsuarioId(@Param("usuarioId") Long usuarioId);
 

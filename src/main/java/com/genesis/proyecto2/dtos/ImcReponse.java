@@ -23,18 +23,20 @@ public class ImcReponse {
     /** Valor del IMC redondeado a dos decimales. */
     private Double imc;
 
-    /** Categoría: "Bajo peso", "Peso normal", "Sobrepeso" u "Obesidad". */
+    /** Categoría "Bajo peso" o Peso normal o Sobrepeso o Obesidad. */
     private String categoria;
 
-    /** Peso mínimo para estar en rango saludable (kg). */
+    /** Peso mínimo para estar en rango saludable kg */
     private Double pesoMinimoSaludable;
 
-    /** Peso máximo para estar en rango saludable (kg). */
+    /** Peso máximo para estar en rango saludable kg */
     private Double pesoMaximoSaludable;
 
     /**
-     * Diferencia entre el peso actual y el rango saludable.
-     * Negativo = por debajo del mínimo, positivo = por encima del máximo, 0 = en rango.
+     * Diferencia entre el peso actual y el rango saludable
+     * Negativo = por debajo del mínimo
+     * positivo = por encima del máximo
+     * 0 = en rango
      */
     private Double diferenciaRango;
 }

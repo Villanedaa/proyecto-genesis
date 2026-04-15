@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * Endpoint para las acciones propias del usuario autenticado (Users).
+ *        Endpoint para las acciones propias del usuario autenticado (Users).
  */
 @RestController
 @RequestMapping("/users/me")
@@ -27,7 +27,7 @@ public class UserProfileController {
 
     @GetMapping
     public ResponseEntity<UserProfileResponse> getCurrentProfile(Authentication authentication) {
-        String email = authentication.getName(); // Spring Security UserDetails username is email
+        String email = authentication.getName();
         return ResponseEntity.ok(usuarioService.getProfile(email));
     }
 

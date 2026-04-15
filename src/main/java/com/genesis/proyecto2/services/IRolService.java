@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author Sergio <sergio.grajalesc@autonoma.edu.co>
  * @author Jhojan <jhojana.villadav@autonoma.edu.co>
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
- * Definición de servicios para la gestión de roles de usuario.
+ * Definición de servicios para la gestión de roles de usuario
  */
 public interface IRolService {
     List<Rol> findAll();

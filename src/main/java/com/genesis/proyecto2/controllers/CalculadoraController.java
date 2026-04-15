@@ -9,19 +9,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * @author Sergio <sergio.grajalesc@autonoma.edu.co>
  * @author Jhojan <jhojana.villadav@autonoma.edu.co>
  * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
  * @version 1.0
  * @since 12/04/2026
- * Controlador para la ejecución de las operaciones del catálogo Genesis.
- * Rutas según openapi.yaml:
- *   POST /execute/credit-calculator    → OP-01 (costo base: 50 tokens)
- *   POST /execute/currency-converter   → OP-02 (costo base: 20 tokens)
- *   POST /execute/bmi-calculator       → OP-03 (costo base: 15 tokens)
- *   POST /execute/sleep-calculator     → OP-04 (costo base: 20 tokens)
+ *        Controlador para la ejecución de las operaciones del catálogo
+ *        Rutas
+ *        POST /execute/credit-calculator OP-01 50 tokens
+ *        POST /execute/currency-converter OP-02 20 tokens
+ *        POST /execute/bmi-calculator OP-03 15 tokens
+ *        POST /execute/sleep-calculator OP-04 20 tokens
  */
+
 @RestController
 @RequestMapping("/execute")
 @RequiredArgsConstructor
@@ -30,9 +30,9 @@ public class CalculadoraController {
     private final IExecutionFacadeService executionFacade;
 
     /**
-     * OP-01 — ¿Cuánto me cuesta ese crédito?
-     * Calcula la cuota mensual y la tabla de amortización completa.
-     * Costo base: 50 tokens.
+     * OP-01 — Cuánto cuesta ese crédito?
+     * Calcula la cuota mensual y la tabla de amortización completa
+     * Costo base 50 tokens
      */
     @PostMapping("/credit-calculator")
     public ResponseEntity<CreditoResponse> calcularCredito(
@@ -43,9 +43,9 @@ public class CalculadoraController {
     }
 
     /**
-     * OP-02 — Conversor COP ↔ USD.
+     * OP-02 — Conversor COP USD.
      * Usa la tasa de cambio vigente gestionada por el administrador.
-     * Costo base: 20 tokens.
+     * Costo base 20 tokens
      */
     @PostMapping("/currency-converter")
     public ResponseEntity<ConversorResponse> convertirMoneda(
@@ -56,9 +56,9 @@ public class CalculadoraController {
     }
 
     /**
-     * OP-03 — Calculadora de IMC.
-     * Retorna IMC, categoría y rango de peso saludable.
-     * Costo base: 15 tokens.
+     * OP-03 — Calculadora de IMC
+     * Retorna IMC categoría y rango de peso saludable
+     * Costo base 15 tokens
      */
     @PostMapping("/bmi-calculator")
     public ResponseEntity<ImcReponse> calcularImc(
@@ -70,8 +70,8 @@ public class CalculadoraController {
 
     /**
      * OP-04 — Calculadora de sueño.
-     * Genera 3 opciones de horario (Mínimo, Recomendado, Ideal).
-     * Costo base: 20 tokens.
+     * Genera 3 opciones de horario (Mínimo RecomendadoIdeal)
+     * Costo base 20 tokens
      */
     @PostMapping("/sleep-calculator")
     public ResponseEntity<CalculadoraSuenioResponse> calcularSuenio(

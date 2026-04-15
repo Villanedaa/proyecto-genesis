@@ -10,35 +10,35 @@ import com.genesis.proyecto2.dtos.CalculadoraSuenioRequest;
 import com.genesis.proyecto2.dtos.CalculadoraSuenioResponse;
 
 /**
- * Interfaz de servicio para las cuatro operaciones de cómputo del catálogo Genesis.
+ * Interfaz de servicio para las cuatro operaciones de cómputo del catálogo
  * Siguiendo principio de Responsabilidad Única, cada método corresponde a una operación.
  * La lógica de descuento de tokens NO vive aquí; la gestiona el servicio de ejecución.
  */
 public interface ICalculadoraService {
 
     /**
-     * OP-01 — Calculadora de crédito.
-     * Calcula cuota mensual, total pagado, total en intereses y tabla de amortización.
+     * OP-01 — Calculadora de crédito
+     * Calcula cuota mensual, total pagado, total en intereses y tabla de amortitización
      *
-     * @param request parámetros de entrada (precio, cuotas, tasa mensual)
+     * @param request parámetros de entrada precio cuotas tasa mensual
      * @return respuesta con tabla de amortización incluida
      */
     CreditoResponse calcularCredito(CreditoRequest request);
 
     /**
-     * OP-02 — Conversor COP ↔ USD.
-     * Usa la tasa de cambio vigente almacenada en la tabla tasa_cambio.
+     * OP-02 — Conversor COP USD
+     * Usa la tasa de cambio vigente almacenada en la tabla tasa_cambio
      *
      * @param request monto y moneda de origen
-     * @return monto convertido, dirección, tasa aplicada y fecha de la tasa
+     * @return monto convertido dirección tasa aplicada y fecha de la tasa
      */
     ConversorResponse convertirMoneda(ConversorRequest request);
 
     /**
-     * OP-03 — Calculadora de IMC.
+     * OP-03 — Calculadora de IMC
      * Calcula IMC, categoría y rango de peso saludable.
      *
-     * @param request peso (kg) y altura (cm)
+     * @param request peso ( y altura 
      * @return IMC, categoría, pesos mínimo/máximo saludables y diferencia al rango
      */
     ImcReponse calcularImc(ImcRequest request);
