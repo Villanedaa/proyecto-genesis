@@ -1,0 +1,840 @@
+openapi: 3.0.3
+info:
+  title: Genesis API - Breaze in the Moon
+  description: "API Specification for Genesis, a computation operations platform with token-based cost tracking. Follows API First design."
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local Development Server
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new end user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/login:
+    post:
+      summary: Login and obtain JWT
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+
+  /users/me:
+    get:
+      summary: Get current authenticated user's profile
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile including current token balance and active plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+
+  /users/me/transactions:
+    get:
+      summary: Get current user's transaction history (Paginated)
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/SizeParam'
+      responses:
+        '200':
+          description: Paginated list of transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransactions'
+
+  /users/me/subscribe:
+    post:
+      summary: Subscribe to an available plan
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequest'
+      responses:
+        '200':
+          description: Subscription successful
+        '400':
+          description: Invalid plan or subscription error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/users:
+    get:
+      summary: Get a list of all users, their balances, plans, and status (Paginated)
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/SizeParam'
+      responses:
+        '200':
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUsers'
+
+  /admin/users/{userId}/status:
+    patch:
+      summary: Activate or deactivate a user
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusRequest'
+      responses:
+        '200':
+          description: User status updated successfully
+
+  /admin/users/{userId}/recharge:
+    post:
+      summary: Manually recharge tokens for a user
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RechargeTokensRequest'
+      responses:
+        '200':
+          description: Tokens recharged successfully
+
+  /admin/metrics:
+    get:
+      summary: Find global consumption metrics
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Global metrics object containing token consumption by day, most executed ops, and highest consuming users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsResponse'
+
+  /plans:
+    get:
+      summary: List all available plans (Paginated)
+      tags: [Plans]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/SizeParam'
+      responses:
+        '200':
+          description: Paginated list of plans
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPlans'
+
+    post:
+      summary: Create a new plan (Admin)
+      tags: [Plans]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanRequest'
+      responses:
+        '201':
+          description: Plan created successfully
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /plans/{planId}:
+    put:
+      summary: Update an existing plan (Admin)
+      tags: [Plans]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanRequest'
+      responses:
+        '200':
+          description: Plan updated successfully
+        '404':
+          description: Plan not found
+
+    delete:
+      summary: Delete a plan (Admin) if it has no active subscriptions
+      tags: [Plans]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Plan deleted successfully
+        '400':
+          description: Cannot delete plan with active subscriptions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /operations:
+    get:
+      summary: Consult available operations catalog (Paginated)
+      tags: [Operations Catalog]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/SizeParam'
+      responses:
+        '200':
+          description: Paginated list of available operations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedOperations'
+
+  /operations/{operationId}/status:
+    patch:
+      summary: Enable or disable an operation from the catalog (Admin)
+      tags: [Operations Catalog]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: operationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusRequest'
+      responses:
+        '200':
+          description: Operation status updated successfully
+
+  /config/exchange-rate:
+    put:
+      summary: Update the global COP/USD exchange rate (Admin)
+      tags: [Configuration]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExchangeRateRequest'
+      responses:
+        '200':
+          description: Exchange rate updated successfully
+
+  /execute/credit-calculator:
+    post:
+      summary: Execute OP-01 - Credit Calculator
+      description: Calculates monthly installment and full amortization table. Base cost 50 tokens.
+      tags: [Execute Operations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditCalculatorRequest'
+      responses:
+        '200':
+          description: Calculation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditCalculatorResponse'
+        '400':
+          description: Validation error or insufficient tokens
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /execute/currency-converter:
+    post:
+      summary: Execute OP-02 - Currency Converter COP <-> USD
+      description: Converts amount based on system exchange rate. Base cost 20 tokens.
+      tags: [Execute Operations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CurrencyConverterRequest'
+      responses:
+        '200':
+          description: Conversion results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyConverterResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+  /execute/bmi-calculator:
+    post:
+      summary: Execute OP-03 - BMI Calculator
+      description: Calculates BMI, category, and healthy weight range. Base cost 15 tokens.
+      tags: [Execute Operations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BMICalculatorRequest'
+      responses:
+        '200':
+          description: BMI Calculation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BMICalculatorResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+  /execute/sleep-calculator:
+    post:
+      summary: Execute OP-04 - Sleep Calculator
+      description: Calculates wake up or sleep times based on average sleep cycles of 90 minutes. Base cost 20 tokens.
+      tags: [Execute Operations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SleepCalculatorRequest'
+      responses:
+        '200':
+          description: Sleep schedule options (Minimal, Recommended, Ideal)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SleepCalculatorResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number, starting at 0
+      required: false
+      schema:
+        type: integer
+        default: 0
+    SizeParam:
+      name: size
+      in: query
+      description: Number of items per page
+      required: false
+      schema:
+        type: integer
+        default: 10
+
+  responses:
+    BadRequestError:
+      description: Validation error or insufficient tokens
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [email, password, name]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    UserProfileResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        balance:
+          type: integer
+          description: Current token balance
+        activePlan:
+          $ref: '#/components/schemas/PlanInfo'
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+
+    PlanInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        tokensGranted:
+          type: integer
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: integer
+        operationCode:
+          type: string
+        tokensInput:
+          type: integer
+        tokensOutput:
+          type: integer
+        totalCost:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    PaginatedTransactions:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+    UserAdminView:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        balance:
+          type: integer
+        activePlan:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+
+    PaginatedUsers:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAdminView'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+    UpdateStatusRequest:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+
+    RechargeTokensRequest:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: integer
+          minimum: 1
+          description: Amount of tokens to recharge
+
+    SubscribeRequest:
+      type: object
+      required: [planId]
+      properties:
+        planId:
+          type: integer
+
+    PlanRequest:
+      type: object
+      required: [name, tokensGranted]
+      properties:
+        name:
+          type: string
+        tokensGranted:
+          type: integer
+          minimum: 0
+
+    PaginatedPlans:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanInfo'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+    OperationInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        name:
+          type: string
+        baseCost:
+          type: integer
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+
+    PaginatedOperations:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/OperationInfo'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+    UpdateExchangeRateRequest:
+      type: object
+      required: [copPerUsd]
+      properties:
+        copPerUsd:
+          type: number
+          format: double
+
+    MetricsResponse:
+      type: object
+      properties:
+        tokensConsumedPerDay:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              tokens:
+                type: integer
+        mostExecutedOperations:
+          type: array
+          items:
+            type: object
+            properties:
+              operationCode:
+                type: string
+              executionCount:
+                type: integer
+        highestConsumingUsers:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: integer
+              userEmail:
+                type: string
+              totalTokensConsumed:
+                type: integer
+
+    CreditCalculatorRequest:
+      type: object
+      required: [precio, cuotas, tasa_mensual]
+      properties:
+        precio:
+          type: number
+          format: double
+        cuotas:
+          type: integer
+        tasa_mensual:
+          type: number
+          format: double
+
+    AmortizationRow:
+      type: object
+      properties:
+        periodo:
+          type: integer
+        capital_amortizado:
+          type: number
+          format: double
+        interes_pagado:
+          type: number
+          format: double
+        saldo_restante:
+          type: number
+          format: double
+
+    CreditCalculatorResponse:
+      type: object
+      properties:
+        cuota_mensual:
+          type: number
+          format: double
+        total_pagado:
+          type: number
+          format: double
+        total_intereses:
+          type: number
+          format: double
+        tabla_amortizacion:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmortizationRow'
+
+    CurrencyConverterRequest:
+      type: object
+      required: [monto, moneda_origen]
+      properties:
+        monto:
+          type: number
+          format: double
+        moneda_origen:
+          type: string
+          enum: [COP, USD]
+
+    CurrencyConverterResponse:
+      type: object
+      properties:
+        monto_convertido:
+          type: number
+          format: double
+        direccion:
+          type: string
+        tasa_aplicada:
+          type: number
+          format: double
+        fecha_actualizacion_tasa:
+          type: string
+          format: date-time
+
+    BMICalculatorRequest:
+      type: object
+      required: [peso_kg, altura_cm]
+      properties:
+        peso_kg:
+          type: number
+          format: double
+        altura_cm:
+          type: number
+          format: double
+
+    BMICalculatorResponse:
+      type: object
+      properties:
+        imc:
+          type: number
+          format: double
+        categoria:
+          type: string
+        peso_minimo_saludable:
+          type: number
+          format: double
+        peso_maximo_saludable:
+          type: number
+          format: double
+        diferencia_rango:
+          type: number
+          format: double
+
+    SleepCalculatorRequest:
+      type: object
+      required: [modo, hora]
+      properties:
+        modo:
+          type: string
+          enum: [HORA_DESPERTAR, HORA_ACOSTARSE]
+        hora:
+          type: string
+          description: "Time in HH:mm format"
+          example: "07:00"
+        minutos_para_dormir:
+          type: integer
+          default: 14
+
+    SleepOption:
+      type: object
+      properties:
+        hora_calculada:
+          type: string
+          description: "Time in HH:mm format"
+        horas_totales_sueno:
+          type: number
+          format: double
+        etiqueta_calidad:
+          type: string
+          enum: [Mínimo, Recomendado, Ideal]
+
+    SleepCalculatorResponse:
+      type: object
+      properties:
+        opciones:
+          type: array
+          items:
+            $ref: '#/components/schemas/SleepOption'
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              error:
+                type: string

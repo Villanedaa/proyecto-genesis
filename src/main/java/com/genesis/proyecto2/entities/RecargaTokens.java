@@ -1,0 +1,50 @@
+package com.genesis.proyecto2.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
+
+/**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ */
+@Entity
+@Table(name = "recarga_tokens")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class RecargaTokens {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    // !!!Aqui tener presente que el nombre que yo le puse usuarioReceptor es con el
+    // fin de entender que esta clase procesa y toma los datos de quien recibe y
+    // quien envia tokens
+    // Relación 1 El usuario que recibe el saldo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuarioReceptor;
+    // Relación 2 El administrador que autoriza también es Usuario
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id", nullable = false)
+    private Usuario administrador;
+    @Column(name = "monto")
+    private Integer monto;
+    @Column(name = "saldo_antes")
+    private Integer saldoAntes;
+    @Column(name = "saldo_despues")
+    private Integer saldoDespues;
+    @Column(name = "observacion")
+    private String observacion;
+    @Column(name = "fecha", insertable = false, nullable = false)
+    private LocalDateTime fecha;
+}
