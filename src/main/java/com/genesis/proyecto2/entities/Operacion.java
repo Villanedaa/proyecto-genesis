@@ -7,7 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-
+/**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ * */
 @Entity
 @Table(name = "operaciones")
 @Data

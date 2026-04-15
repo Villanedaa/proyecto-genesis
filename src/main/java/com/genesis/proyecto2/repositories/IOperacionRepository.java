@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
  * Repositorio para la entidad Operacion.
  * Proporciona métodos para interactuar con la tabla de operaciones en MySQL.
  */

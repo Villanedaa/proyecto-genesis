@@ -14,7 +14,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-
+/**
+ * @author Sergio <sergio.grajalesc@autonoma.edu.co>
+ * @author Jhojan <jhojana.villadav@autonoma.edu.co>
+ * @author Sebastian <sebastian.villanedag@autonoma.edu.co>
+ * @version 1.0
+ * @since 12/04/2026
+ * */
 @Component
 public class JwtUtil {
 
@@ -36,8 +42,7 @@ public class JwtUtil {
 
         Map<String, Object> claimsExtra = new HashMap<>();
         claimsExtra.put("roles", roles);
-        // Sugerencia: Si tu UserDetails implementa una interfaz propia,
-        // podrías incluir el ID del usuario aquí para el motor de tokens.
+
 
         return Jwts.builder()
                 .claims(claimsExtra)
